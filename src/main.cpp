@@ -16,6 +16,7 @@
 
 // namespace
 using namespace std;
+namespace fs = std::filesystem;
 
 // Initialize
 const vector<vector<string>> scommands = {
@@ -43,9 +44,9 @@ int cmd_help(const char* sc) {
   return 1;
 }
 // key-gen
-int cmd_keygen(const string& path) {
+int cmd_keygen(const fs::path& path) {
   // ファイルが存在するなら上書きするか聞く
-  if (filesystem::exists(path)) {
+  if (fs::exists(path)) {
     cout << "File \'" << path << "\' exists." << endl << "Overwrite? [ y / n ]: " << flush;
     string ans;
     cin >> ans;
@@ -79,17 +80,17 @@ int cmd_keygen(const string& path) {
   }
 
   // ファイル出力
-  saveKey(acbe, acaf, path.c_str());
+  saveKey(acbe, acaf, path);
   return 0;
 }
 
 // lock
-int cmd_lock(const string& txt_path, const string& key_path) {
+int cmd_lock(const fs::path& txt_path, const fs::path& key_path) {
   vector<int> ac_key;
   vector<int> ac_value;
 
   // Load Key data
-  loadKey(ac_key, ac_value, key_path.c_str());
+  loadKey(ac_key, ac_value, key_path);
 
   // Load txt
   ifstream bfstream(txt_path, ios::binary);
@@ -105,19 +106,19 @@ int cmd_lock(const string& txt_path, const string& key_path) {
     int index = static_cast<int>(distance(ac_key.begin(), it));
     after_ac.push_back(ac_value[index]);
   }
-  writeEncrypted(after_ac, txt_path.c_str());
+  writeEncrypted(after_ac, txt_path);
   return 0;
 }
 
 // unlock
-int cmd_unlock(const string& txt_path, const string& key_path) {
+int cmd_unlock(const fs::path& txt_path, const fs::path& key_path) {
     // Load locked text
-    vector<int> locked_ac = readEncrypted(txt_path.c_str());
+    vector<int> locked_ac = readEncrypted(txt_path);
 
     // Load key file
     vector<int> ac_key;
     vector<int> ac_value;
-    loadKey(ac_key, ac_value, key_path.c_str());
+    loadKey(ac_key, ac_value, key_path);
 
     vector<int> unlocked_ac = {};
 
@@ -134,7 +135,7 @@ int cmd_unlock(const string& txt_path, const string& key_path) {
         unlocked_ac.push_back(ac_key[index]);
     }
 
-    writeEncrypted(unlocked_ac, txt_path.c_str());
+    writeEncrypted(unlocked_ac, txt_path);
 
     return 0;
 }
@@ -150,16 +151,16 @@ int main(int argc, char* argv[]) {
     if (string(argv[1]) == "help") {
       return cmd_help(argv[2]);
     } else if (string(argv[1]) == "key-gen") {
-      return cmd_keygen(string(argv[2]));
+      return cmd_keygen(argv[2]);
     } else {
       cout << "Error: The command is incomplete" << endl;
       return cmd_help();
     }
   } else if (argc == 4) {
     if (string(argv[1]) == "lock") {
-      return cmd_lock(string(argv[2]), string(argv[3]));
+      return cmd_lock(argv[2], argv[3]);
     } else if (string(argv[1]) == "unlock") {
-      return cmd_unlock(string(argv[2]), string(argv[3]));
+      return cmd_unlock(argv[2], argv[3]);
     } else {
       cout << "Error: The command is incomplete" << endl;
       return cmd_help();

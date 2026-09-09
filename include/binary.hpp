@@ -1,18 +1,20 @@
 #include <fstream>
 #include <vector>
 #include <cstdint>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 void saveKey(
     const std::vector<int>& key,
     const std::vector<int>& value,
-    const char* filename
+    const fs::path filename
 )
 {
     std::ofstream file(filename, std::ios::binary);
 
     if (!file) {
         return;
-        printf("Error: Failed to save the key\n");
     }
 
     for (size_t i = 0; i < key.size(); i++) {
@@ -27,7 +29,7 @@ void saveKey(
 void loadKey(
     std::vector<int>& key,
     std::vector<int>& value,
-    const char* filename
+    const fs::path filename
 )
 {
     std::ifstream file(filename, std::ios::binary);
@@ -50,7 +52,7 @@ void loadKey(
 
 void writeEncrypted(
     const std::vector<int>& encrypted,
-    const char* filename
+    const fs::path filename
 )
 {
     std::ofstream file(filename, std::ios::binary | std::ios::trunc);
@@ -70,7 +72,7 @@ void writeEncrypted(
 }
 
 std::vector<int> readEncrypted(
-    const char* filename
+    const fs::path filename
 )
 {
     std::vector<int> encrypted;
