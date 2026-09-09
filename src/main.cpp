@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
   } else if (argc == 4) {
     if (string(argv[1]) == "lock") {
       return cmd_lock(argv[2], argv[3]);
-    } else if (string(argv[1]) == "unlock") {
+    } else if (string(argv[1]) == "ulock") {
       return cmd_unlock(argv[2], argv[3]);
     } else {
       cout << "Error: The command is incomplete" << endl;

@@ -11,6 +11,8 @@ target_include_directories(text_locker PRIVATE
     include
 )
 
+install(TARGETS text_locker DESTINATION bin)
+
 if(BUILD_WINDOWS)
     if(NOT WIN32)
         message(STATUS "Cross-compiling for Windows")
@@ -22,6 +24,7 @@ if(BUILD_WINDOWS)
         _WIN32
     )
     target_link_options(text_locker PRIVATE
-        -static
+        -static-libgcc
+        -static-libstdc++
     )
 endif()
