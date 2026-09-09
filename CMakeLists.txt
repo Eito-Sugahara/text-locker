@@ -21,4 +21,7 @@ if(BUILD_WINDOWS)
     target_compile_definitions(text_locker PRIVATE
         _WIN32
     )
+    target_link_options(text_locker PRIVATE
+        -static
+    )
 endif()
