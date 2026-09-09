@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
-project(text_locker CXX)
+project(tl CXX)
 
 option(BUILD_WINDOWS "Build for Windows using MinGW" OFF)
 
-add_executable(text_locker
+add_executable(tl
     src/main.cpp
 )
 
-target_include_directories(text_locker PRIVATE
+target_include_directories(tl PRIVATE
     include
 )
 
-install(TARGETS text_locker DESTINATION bin)
+install(TARGETS tl DESTINATION bin)
 
 if(BUILD_WINDOWS)
     if(NOT WIN32)
@@ -20,10 +20,10 @@ if(BUILD_WINDOWS)
         message(STATUS "Building for Windows")
     endif()
 
-    target_compile_definitions(text_locker PRIVATE
+    target_compile_definitions(tl PRIVATE
         _WIN32
     )
-    target_link_options(text_locker PRIVATE
+    target_link_options(tl PRIVATE
         -static-libgcc
         -static-libstdc++
     )
