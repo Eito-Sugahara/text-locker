@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/text_locker.dir/link.d CMakeFiles/text_locker.dir/src/main.cpp.o -o text_locker
