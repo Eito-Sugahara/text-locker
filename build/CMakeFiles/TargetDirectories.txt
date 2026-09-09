@@ -1,0 +1,3 @@
+/home/eisuga/programs/CPP/text-locker/build/CMakeFiles/text_locker.dir
+/home/eisuga/programs/CPP/text-locker/build/CMakeFiles/edit_cache.dir
+/home/eisuga/programs/CPP/text-locker/build/CMakeFiles/rebuild_cache.dir
